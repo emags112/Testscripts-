@@ -1,0 +1,45 @@
+//define arrays to use, keep both to be able to run for multiple teams;
+var lines = [];
+var oswego = [];
+
+//pull text, remove and replace returns with line markers 
+var rawText = document.querySelector("pre").textContent;
+listText = rawText.replace(/(\r\n|\r|\n)/gm, "%");
+
+//break full text string into its 'line' components, remove markers
+for(l = 0; l<listText.length; l++){
+  if(listText[l] === "%"){
+    for(a = 1; a<listText.length; a++){
+      if(listText[l+a] === "%"){
+        var lineText = listText.slice(l+1, l+a);
+        lines.push({full:lineText});
+        a = listText.length;
+}}}}
+
+//create team array
+for(i = lines.length-1; i >= 0; i--){
+  if(lines[i].full.indexOf("Oswego") !== -1 |
+     lines[i].full.indexOf("Event") !== -1 |
+     (lines[i].full.indexOf("=") !== -1 && lines[i-2].full.indexOf("=") !== -1)){
+    oswego.unshift(lines[i]);
+  }
+  else{
+    lines.splice(i, 1);
+  }
+}  
+
+//clean team array of empty events
+for(i=oswego.length-1; i>2; i--){
+  if(oswego[i].full.indexOf("Event") !== -1 && oswego[i-2].full.indexOf("Event") !== -1){
+    oswego.splice(i-2, 2);
+  }};
+if(oswego[oswego.length-1].full.indexOf("=") !== -1){
+  oswego.splice(oswego.length-2, 2);
+  
+//print team array 
+for(i=0; i<oswego.length; i++){
+  if(oswego[i].full.indexOf("Event") !== -1){
+    console.log("");
+  }
+  console.log(oswego[i].full);
+};
