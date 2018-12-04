@@ -1,0 +1,12 @@
+
+
+var oswego = [{name: nick},{name: tim},{name: mike},{name: doug}];
+
+var ul = document.querySelector("ul");
+var li = document.createElement("li");
+
+oswego.forEach(function(){
+  let text = document.createTextNode(this.name);
+  li.appendChild(text);
+  ul.appendChild(li);
+});
